@@ -8,7 +8,12 @@ E-commerce-backend is built mimicking the backend architecture of an e-commerce 
 - Populating database through sequelize
 - RESTful routes with CRUD functionalities
 
-### Demo
+### Demo 1: GET, POST, PUT and DELETE in Insomnia Core
 
 Click [here](./demo/demo.gif) to restart the video.
 ![demo of ecommerce backend](./demo/demo.gif)
+
+### Demo 2: Establish database in MySQL shell, seed the database in node CLI and start server
+
+Click [here](./demo/demo2.gif) to restart the video.
+![demo of ecommerce backend startup](./demo/demo2.gif)
