@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ message: "No category with that id!" });
       return;
     }
-    res.status(200).json(categorybyId);
+    res.status(200).json(categoryById);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -61,7 +61,7 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({ message: "No category with that id!" });
       return;
     }
-    res.status(200).json(deleteCategory);
+    res.status(200).json(deletedCategory);
   } catch (err) {
     res.status(500).json(err);
   }

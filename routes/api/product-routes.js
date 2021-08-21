@@ -40,25 +40,29 @@ router.post("/", async (req, res) => {
   */
   try {
     const newProduct = await Product.create(req.body);
-    res.status(200).json(newProduct);
-    // Populate the ProductTag table if tagIds array is supplied
-    // First map out the corresponding objects for ProductTag
+    // Generate one or other response based on tagIds array empty or not
     if (req.body.tagIds.length) {
-      const productTagIdArr = req.body.tagIds.map((tag_id) => {
+      // If tagIds is not empty, first map out the corresponding objects for ProductTag
+      const productTagIdArr = await req.body.tagIds.map((tag_id) => {
         return {
           product_id: newProduct.id,
           tag_id,
         };
       });
       // then populate all instances in the ProductTag table
-      const productTagIds = await ProductTag.bulkCreate(productTagIdArr);
+      const productTagIds = await ProductTag.bulkCreate(productTagIdArr, {
+        returning: true,
+      });
       res.status(200).json(productTagIds);
+    } else {
+      // if tagIds is empty like so [], just respond
+      res.status(200).json(newProduct);
     }
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
+// Can take modified tagIds and change the associations
 router.put("/:id", (req, res) => {
   Product.update(req.body, {
     where: { id: req.params.id },
@@ -79,7 +83,7 @@ router.put("/:id", (req, res) => {
             tag_id,
           };
         });
-      // find out tag_ids that are not associated with the product any more
+      // find out which tag_ids that are not associated with the product any more
       const productTagsToRemoveByIds = productTags
         .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
         .map(({ id }) => id);
@@ -96,9 +100,9 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
-    const deletedProduct = Product.destroy({
+    const deletedProduct = await Product.destroy({
       where: { id: req.params.id },
     });
     if (!deletedProduct) {
