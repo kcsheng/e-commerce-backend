@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const { Category, Product } = require("../../models");
 
-// The `/api/categories` endpoint
-
 router.get("/", async (req, res) => {
   try {
     const allCategories = await Category.findAll({
@@ -24,6 +22,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ message: "No category with that id!" });
       return;
     }
+    res.status(200).json(categorybyId);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -38,12 +37,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", (req, res) => {
-  // update a category by its `id` value
-  const { id } = req.params;
+router.put("/:id", async (req, res) => {
   try {
     const updatedCategory = await Category.update(req.body, {
-      where: { id },
+      where: { id: req.params.id },
     });
     if (!updatedCategory) {
       res.status(404).json({ message: "No category with that id!" });
@@ -54,12 +51,10 @@ router.put("/:id", (req, res) => {
   }
 });
 
-router.delete("/:id", (req, res) => {
-  // delete a category by its `id` value
-  const { id } = req.params;
+router.delete("/:id", async (req, res) => {
   try {
     const deletedCategory = await Category.destroy({
-      where: { id },
+      where: { id: req.params.id },
     });
     if (!deletedCategory) {
       res.status(404).json({ message: "No category with that id!" });
