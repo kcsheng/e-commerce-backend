@@ -20,6 +20,7 @@ router.get("/:id", async (req, res) => {
     });
     if (!productById) {
       res.status(404).json({ message: "No product with this id!" });
+      return;
     }
     res.status(200).json(productById);
   } catch (err) {
@@ -40,8 +41,8 @@ router.post("/", async (req, res) => {
   try {
     const newProduct = await Product.create(req.body);
     res.status(200).json(newProduct);
-    // Populate the ProductTag table if tag Ids are supplied
-    // First map out the corresponding objects for ProductTag if tagsIds array is supplied
+    // Populate the ProductTag table if tagIds array is supplied
+    // First map out the corresponding objects for ProductTag
     if (req.body.tagIds.length) {
       const productTagIdArr = req.body.tagIds.map((tag_id) => {
         return {
@@ -59,7 +60,6 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
-  // update product data
   Product.update(req.body, {
     where: { id: req.params.id },
   })
@@ -92,7 +92,6 @@ router.put("/:id", (req, res) => {
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
       res.status(400).json(err);
     });
 });
@@ -103,7 +102,8 @@ router.delete("/:id", (req, res) => {
       where: { id: req.params.id },
     });
     if (!deletedProduct) {
-      res.status(400).json({ message: "No product with that id!" });
+      res.status(404).json({ message: "No product with that id!" });
+      return;
     }
     res.status(200).json(deletedProduct);
   } catch (err) {
