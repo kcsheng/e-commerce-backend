@@ -7,3 +7,8 @@ E-commerce-backend is built mimicking the backend architecture of an e-commerce 
 - Sensitive data storage
 - Populating database through sequelize
 - RESTful routes with CRUD functionalities
+
+### Demo
+
+Click [here](./demo/demo.gif) to restart the video.
+![demo of ecommerce backend](./demo/demo.gif)
