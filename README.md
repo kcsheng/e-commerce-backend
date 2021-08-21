@@ -13,7 +13,7 @@ E-commerce-backend is built mimicking the backend architecture of an e-commerce 
 Click [here](./demo/demo.gif) to restart the video.
 ![demo of ecommerce backend](./demo/demo.gif)
 
-### Demo 2: Establish database in MySQL shell, seed the database in node CLI and start server
+### Demo 2: Set up database in MySQL shell, seed the data in node from CLI and start express server
 
 Click [here](./demo/demo2.gif) to restart the video.
 ![demo of ecommerce backend startup](./demo/demo2.gif)
