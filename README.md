@@ -1,6 +1,6 @@
 ## E-commerce backend
 
-E-commerce-backend is built mimicking the backend architecture of an e-commerce website. It utilises the frameowrk Express and the ORM library Sequelize to interact with relational database through MySQL.
+E-commerce-backend is built mimicking the backend architecture of an e-commerce website. It utilises the framework Express and the ORM library Sequelize to interact with relational database through MySQL.
 
 ### Features
 
