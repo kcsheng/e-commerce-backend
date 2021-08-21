@@ -80,13 +80,13 @@ router.put("/:id", (req, res) => {
           };
         });
       // find out tag_ids that are not associated with the product any more
-      const productTagsToRemove = productTags
+      const productTagsToRemoveByIds = productTags
         .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
         .map(({ id }) => id);
 
       // run both actions
       return Promise.all([
-        ProductTag.destroy({ where: { id: productTagsToRemove } }),
+        ProductTag.destroy({ where: { id: productTagsToRemoveByIds } }),
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
